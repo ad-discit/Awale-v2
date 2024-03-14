@@ -74,6 +74,7 @@ namespace Awale_v2
                 // Add a seed to the next pit
                 Rows[currentRowIndex].Pits[currentPitIndex].Seeds.AddSeeds(1);
                 seedsToDistribute--;
+
             }
             // Display the updated board state
             DisplayBoard();

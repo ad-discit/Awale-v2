@@ -10,6 +10,7 @@ namespace Awale_v2
     {
         public Pits[] Pits { get; set; }
 
+
         public Row()
         {
             Pits = new Pits[6]; //  6 pits 

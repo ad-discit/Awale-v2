@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Formats.Asn1.AsnWriter;
 
+
 namespace Awale_v2
 {
     public class Player : Person

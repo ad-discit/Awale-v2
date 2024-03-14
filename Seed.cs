@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace Awale_v2
 {
     public class Seeds
+
     {
         public int Count { get; set; }
 

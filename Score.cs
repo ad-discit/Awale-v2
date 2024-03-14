@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Awale_v2
+
 {
     public class Score
     {
