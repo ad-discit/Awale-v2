@@ -9,7 +9,7 @@ namespace Awale_v2
 {
     public class Pits
     {
-        public Seeds Seeds { get; set; }
+        public Seeds Seeds { get; set; } 
 
         public Pits(int initialSeedCount)
         {
