@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Formats.Asn1.AsnWriter;
-
 
 namespace Awale_v2
 {
@@ -12,23 +6,24 @@ namespace Awale_v2
     {
         public int PlayerNumber { get; set; }
         public Score PlayerScore { get; set; }
+        public string Gamertag { get; set; }
 
-        public Player(string name, int playerNumber) : base(name)
+        // Constructor
+        public Player(string name, string gamertag, int playerNumber) : base(name)
         {
-            PlayerNumber = playerNumber;
             PlayerScore = new Score();
-        }
-
-        // Example Method
-        public void UpdateScore(int points)
-        {
-            PlayerScore.Total += points;
+            Gamertag = gamertag;
+            PlayerNumber = playerNumber;
         }
 
         public int GetScore()
         {
             return PlayerScore.Total;
         }
-    }
 
+        public void UpdateScore(int points)
+        {
+            PlayerScore.AddPoints(points);
+        }
+    }
 }

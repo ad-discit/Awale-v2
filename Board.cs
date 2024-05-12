@@ -19,10 +19,8 @@ namespace Awale_v2
             }
         }
 
-        // Methods
         public void SetupBoard()
         {
-            // Initialize board setup with 4 seeds in each pit
             foreach (var row in Rows)
             {
                 foreach (var pit in row.Pits)
@@ -34,7 +32,6 @@ namespace Awale_v2
 
         public void DisplayBoard()
         {
-            // Logic to display the board's current state
             for (int i = 0; i < Rows.Length; i++)
             {
                 Console.WriteLine($"Row {i + 1}: ");
@@ -46,39 +43,54 @@ namespace Awale_v2
             }
         }
 
-        // method to play a turn
         public void PlayTurn(Player player, int rowIndex, int pitIndex)
         {
-            // Get the selected row and pit
             Row selectedRow = Rows[rowIndex];
             Pits selectedPit = selectedRow.Pits[pitIndex];
-
-            // Distribute the seeds
             int seedsToDistribute = selectedPit.Seeds.Count;
             selectedPit.Seeds.RemoveAllSeeds();
 
             int currentRowIndex = rowIndex;
             int currentPitIndex = pitIndex;
+
             while (seedsToDistribute > 0)
             {
-                // Move to the next pit
-                currentPitIndex++;
-
-                // Check if we need to switch rows
+                currentPitIndex++; // Move to the next pit
                 if (currentPitIndex >= selectedRow.Pits.Length)
                 {
-                    currentPitIndex = 0;
-                    currentRowIndex = (currentRowIndex + 1) % Rows.Length;
+                    currentPitIndex = 0; // Reset to first pit if end of row is reached
+                    currentRowIndex = (currentRowIndex + 1) % Rows.Length; // Switch row
                 }
 
-                // Add a seed to the next pit
                 Rows[currentRowIndex].Pits[currentPitIndex].Seeds.AddSeeds(1);
                 seedsToDistribute--;
-
             }
-            // Display the updated board state
+
+            // Capture logic, if the last seed ends on opponent's row
+            if (currentRowIndex != rowIndex && (Rows[currentRowIndex].Pits[currentPitIndex].Seeds.Count == 2 || Rows[currentRowIndex].Pits[currentPitIndex].Seeds.Count == 3))
+            {
+                CaptureSeeds(player, currentRowIndex, currentPitIndex);
+            }
+
             DisplayBoard();
         }
+
+        private void CaptureSeeds(Player player, int rowIndex, int pitIndex)
+        {
+            int seedsCaptured = 0;
+            // Start capturing from the next pit where the last seed was placed
+            pitIndex--;
+            while (pitIndex >= 0 && (Rows[rowIndex].Pits[pitIndex].Seeds.Count == 2 || Rows[rowIndex].Pits[pitIndex].Seeds.Count == 3))
+            {
+                seedsCaptured += Rows[rowIndex].Pits[pitIndex].Seeds.Count;
+                Rows[rowIndex].Pits[pitIndex].Seeds.RemoveAllSeeds();
+                pitIndex--;
+            }
+            player.UpdateScore(seedsCaptured);
+            Console.WriteLine($"{player.Gamertag} captures {seedsCaptured} seeds!");
+        }
+
     }
+
 
 }
